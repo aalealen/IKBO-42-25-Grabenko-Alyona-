@@ -42,3 +42,5 @@ echo "$line"
 **Результат работы:**
 
 На скриншоте показан вывод программы banner с текстом "Hello from RTU MIREA!". Рамка автоматически подстроилась под длину текста.
+<img width="1920" height="922" alt="Снимок экрана от 2026-09-19 01-24-03" src="https://github.com/user-attachments/assets/5d470e07-4a37-4b6f-a37f-a375d018a2b3" />
+

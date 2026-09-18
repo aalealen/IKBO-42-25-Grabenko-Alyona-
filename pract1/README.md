@@ -5,3 +5,8 @@
 ```bash
 #!/bin/bash
 grep -o '^[^:]*' /etc/passwd | sort
+```
+**Результат работы:**
+
+На скриншоте показан вывод команды grep и sort — список имён пользователей, отсортированный по алфавиту.
+<img width="1734" height="932" alt="Снимок экрана от 2026-09-19 00-51-04" src="https://github.com/user-attachments/assets/c620d643-653e-414a-95fb-0a3150eedf7f" />

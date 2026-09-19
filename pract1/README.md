@@ -139,3 +139,12 @@ fi
 find "$1" -type f -name "*.$2" -print0 | tar -czvf archive.tar.gz --null -T -
 echo "Архив archive.tar.gz создан"
 ```
+**Тестовые файлы:**
+В папке `test_tar` созданы четыре файла:
+- `file1.txt` — содержимое `one`
+- `file2.txt` — содержимое `two`
+- `file3.log` — содержимое `three`
+- `file4.txt` — содержимое `four`
+**Результат работы:**
+На скриншоте показан запуск программы `./task8.sh test_tar txt`: в архив `archive.tar.gz` попали только файлы с расширением `.txt` (`file1.txt`, `file2.txt`, `file4.txt`), файл `file3.log` пропущен. Проверка `tar -tzf archive.tar.gz` подтверждает содержимое архива.
+<img width="1920" height="922" alt="Снимок экрана от 2026-09-19 17-51-44" src="https://github.com/user-attachments/assets/f5aac877-747e-4223-9887-4a8cca88dcbd" />

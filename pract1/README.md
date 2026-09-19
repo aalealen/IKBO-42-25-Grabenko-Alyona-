@@ -191,6 +191,7 @@ find "$1" -type f -name "*.txt" -empty
 - `empty2.txt` — пустой
 - `not_empty.txt` — содержит текст
 - `empty.log` — пустой, но не `.txt`
+
 **Результат работы:**
 На скриншоте показан запуск программы `./task10.sh test_empty`. Программа вывела только пустые файлы с расширением `.txt`:
 <img width="1920" height="922" alt="Снимок экрана от 2026-09-19 18-18-39" src="https://github.com/user-attachments/assets/cb256b2e-6d48-41ab-bc35-d0229c8466ef" />

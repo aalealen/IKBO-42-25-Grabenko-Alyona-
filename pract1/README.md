@@ -56,3 +56,5 @@ grep -oE '[a-zA-Z_][a-zA-Z0-9_]*' "$1" | sort -u
 **Результат работы:**
 
 На скриншоте показан вывод программы для файла hello.c - все уникальные идентификаторы, отсортированные по алфавиту.
+<img width="1672" height="941" alt="IMG_2058" src="https://github.com/user-attachments/assets/bed83b6f-cae2-4591-b2b6-776548f117f0" />
+

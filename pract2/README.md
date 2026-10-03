@@ -13,3 +13,24 @@
 
 ```bash
 python3 -m pip show matplotlib
+```
+Основные элементы:
+- **Name** — имя пакета (`matplotlib`).
+- **Version** — версия в формате semver `3.11.2` (MAJOR.MINOR.PATCH).
+- **Summary** — краткое описание.
+- **Home-page** — сайт проекта.
+- **Author** — авторы пакета.
+- **License** — лицензия.
+- **Location** — путь установки.
+- **Requires** — зависимости.
+- **Required-by** — кто зависит от этого пакета.
+
+**Как получить пакет без менеджера пакетов:**
+- Скачать `.whl` файл напрямую с PyPI: https://pypi.org/project/matplotlib/#files
+- Распаковать (это zip-архив): `unzip matplotlib-*.whl -d matplotlib_pkg`
+- Служебная информация лежит в `matplotlib-*.dist-info/METADATA`.
+- Либо клонировать репозиторий с GitHub и изучить `pyproject.toml`.
+
+**Результат работы:**
+На скриншоте показан вывод команды `pip show matplotlib` — служебная информация о пакете: имя, версия, зависимости, лицензия.
+<img width="1087" height="319" alt="image" src="https://github.com/user-attachments/assets/74880c3f-f804-4700-aa2e-798f31dada25" />

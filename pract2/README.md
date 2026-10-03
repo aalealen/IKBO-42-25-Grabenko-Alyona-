@@ -210,4 +210,65 @@ output [
 
 Решение единственное: устанавливается `foo 1.0.0` (без зависимостей) и `target 2.0.0`. Пакеты `left`, `right`, `shared` не устанавливаются, потому что `foo 1.0.0` их не требует. Если бы был выбран `foo 1.1.0`, то потребовались бы `left` и `right`, которые через `shared` создали бы конфликт с `target`.
 
+## Задача 7. Обобщённая модель задачи о зависимостях пакетов
+**Условие:**  
+Представить на MiniZinc задачу о зависимостях пакетов в общей форме, чтобы конкретный экземпляр задачи описывался только своим набором данных.
+
+**Решение:**
+
+Модель разделена на два файла: универсальная модель `packages_general.mzn` и файл данных `data.dzn`.
+
+**Файл `packages_general.mzn`:**
+
+```minizinc
+int: n_packages;
+array[1..n_packages] of int: n_versions;
+
+int: n_deps;
+array[1..n_deps] of int: from_pkg;
+array[1..n_deps] of int: from_ver;
+array[1..n_deps] of int: to_pkg;
+array[1..n_deps] of int: min_ver;
+array[1..n_deps] of int: max_ver;
+
+array[1..n_packages] of var 0..max(n_versions): selected;
+
+constraint forall(i in 1..n_packages)(selected[i] <= n_versions[i]);
+constraint selected[1] > 0;
+
+constraint forall(d in 1..n_deps)(
+    (selected[from_pkg[d]] = from_ver[d]) ->
+        (selected[to_pkg[d]] >= min_ver[d] /\
+         selected[to_pkg[d]] <= max_ver[d])
+);
+
+solve satisfy;
+
+output [
+    "Установленные версии (0 = не установлен):\n"
+] ++ [
+    "  пакет \(i): версия \(selected[i])\n"
+    | i in 1..n_packages
+];
+```
+Файл `data.dzn` (данные из задачи 6):
+
+```minizinc
+n_packages = 6;
+n_versions = [1, 2, 1, 1, 2, 2];
+
+n_deps = 6;
+
+from_pkg = [1, 1, 2, 3, 4, 5];
+from_ver = [1, 1, 2, 1, 1, 1];
+to_pkg   = [2, 6, 3, 5, 5, 6];
+min_ver  = [1, 2, 1, 1, 1, 1];
+max_ver  = [1, 2, 1, 1, 1, 1];
+```
+**Результат работы:**
+
+Модель выдаёт то же решение, что и в задаче 6, но теперь оно получается из данных, а не зашито в код:
+<img width="850" height="902" alt="image" src="https://github.com/user-attachments/assets/19999ced-df19-4492-8e65-9adaba1a7b3a" />
+
+
 

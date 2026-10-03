@@ -64,3 +64,13 @@ npm view express
 На скриншоте показан вывод команды npm `view express` - служебная информация о пакете: имя, версия, зависимости, лицензия, сопровождающие.
 <img width="1476" height="709" alt="image" src="https://github.com/user-attachments/assets/1b6e0d50-a5b3-468e-9cd2-ef8a0c5604e4" />
 
+## Задача 3. Граф зависимостей matplotlib и express
+
+**Условие:**  
+Сформировать graphviz-код и получить изображения зависимостей matplotlib и express.
+
+**Решение:**
+### matplotlib
+Для получения дерева зависимостей использована утилита `pipdeptree`:
+```bash
+pipdeptree --packages matplotlib --graph-output dot > matplotlib_deps.dot

@@ -102,3 +102,28 @@ xdg-open express_deps.png
 
 <img width="2492" height="155" alt="image" src="https://github.com/user-attachments/assets/9b43750b-9c83-4045-8b9a-a32cb6143e91" />
 
+## Задача 4. Счастливые билеты на MiniZinc
+
+**Условие:**  
+Изучить основы программирования в ограничениях. Установить MiniZinc, разобраться с основами его синтаксиса и работы в IDE. Решить на MiniZinc задачу о счастливых билетах. Добавить ограничение на то, что все цифры билета должны быть различными (подсказка: используйте `all_different`). Найти минимальное решение для суммы 3 цифр.
+
+**Решение (файл `lucky_ticket.mzn`):**
+
+```minizinc
+include "alldifferent.mzn";
+
+array[1..6] of var 0..9: digits;
+
+constraint alldifferent(digits);
+
+constraint digits[1] + digits[2] + digits[3] = digits[4] + digits[5] + digits[6];
+
+var 0..27: sum3 = digits[1] + digits[2] + digits[3];
+
+solve minimize sum3;
+
+output [
+    "Билет: \(digits[1])\(digits[2])\(digits[3])\(digits[4])\(digits[5])\(digits[6])\n",
+    "Сумма первых трёх: \(sum3)\n",
+    "Сумма последних трёх: \(digits[4] + digits[5] + digits[6])\n"
+];

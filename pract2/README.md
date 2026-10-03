@@ -88,7 +88,9 @@ dot -Tpng matplotlib_deps.dot -o matplotlib_deps.png
 <img width="1314" height="383" alt="image" src="https://github.com/user-attachments/assets/0a640035-b2ad-4314-95bc-349af3954886" />
 
 **Результат работы:**
+
 Граф зависимостей matplotlib:
+<img width="1314" height="383" alt="image" src="https://github.com/user-attachments/assets/0a640035-b2ad-4314-95bc-349af3954886" />
 
 Граф зависимостей express:
 <img width="2492" height="155" alt="image" src="https://github.com/user-attachments/assets/9b43750b-9c83-4045-8b9a-a32cb6143e91" />

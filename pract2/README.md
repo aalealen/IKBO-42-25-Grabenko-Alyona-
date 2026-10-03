@@ -81,7 +81,11 @@ dot -Tpng matplotlib_deps.dot -o matplotlib_deps.png
 ```
 ### express
 Для получения графа зависимостей создан Graphviz-код вручную на основе данных из `npm view express`.
-Рендеринг изображения:
+```bash
+nano express_deps.dot
+dot -Tpng express_deps.dot -o express_deps.png
+xdg-open express_deps.png
+```
 
 <img width="980" height="625" alt="image" src="https://github.com/user-attachments/assets/666b17f3-e243-4751-b89e-09f5bd766507" />
 

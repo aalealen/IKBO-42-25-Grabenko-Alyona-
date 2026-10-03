@@ -44,3 +44,20 @@ python3 -m pip show matplotlib
 ```bash
 npm view express
 ```
+**Основные элементы:**
+- **name** — имя пакета (`express`).
+- **version** — версия в формате semver (`5.2.1`).
+- **description** — краткое описание.
+- **license** — лицензия (MIT).
+- **dependencies** — зависимости пакета (28 штук).
+- **maintainers** — сопровождающие пакета.
+- **dist.tarball** — ссылка на архив пакета.
+- **dist-tags** — теги версий (`latest: 5.2.1`).
+
+**Как получить пакет без менеджера пакетов:**
+- Скачать `.tgz` архив напрямую из реестра npm: https://registry.npmjs.org/express/-/express-5.2.1.tgz
+- Распаковать: `tar -xzf express-5.2.1.tgz`
+- Служебная информация лежит в `package/package.json`.
+- Либо клонировать репозиторий с GitHub: https://github.com/expressjs/express
+
+**Результат работы:**

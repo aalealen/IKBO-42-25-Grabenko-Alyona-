@@ -170,4 +170,44 @@ output [
 
 <img width="850" height="902" alt="image" src="https://github.com/user-attachments/assets/b20c9357-7f23-4114-ab74-6a2ae9a95e60" />
 
+## Задача 6. Зависимости пакетов на MiniZinc (по данным)
+
+**Условие:**  
+Решить на MiniZinc задачу о зависимостях пакетов для следующих данных:  
+root 1.0.0 зависит от foo ^1.0.0 и target ^2.0.0. foo 1.1.0 зависит от left ^1.0.0 и right ^1.0.0. foo 1.0.0 не имеет зависимостей. left 1.0.0 зависит от shared >=1.0.0. right 1.0.0 зависит от shared <2.0.0. shared 2.0.0 не имеет зависимостей. shared 1.0.0 зависит от target ^1.0.0. target 2.0.0 и 1.0.0 не имеют зависимостей.
+
+**Решение (файл `packages2.mzn`):**
+
+```minizinc
+var {0,100,110}: foo;
+var {0,100,200}: target;
+var {0,100}: left;
+var {0,100}: right;
+var {0,100,200}: shared;
+
+constraint foo >= 100;
+constraint target = 200;
+
+constraint (foo = 110) -> (left = 100 /\ right = 100);
+constraint (left = 100) -> (shared >= 100);
+constraint (right = 100) -> (shared < 200);
+constraint (shared = 100) -> (target < 200);
+
+solve satisfy;
+
+output [
+    "foo    = \(foo)\n",
+    "target = \(target)\n",
+    "left   = \(left)\n",
+    "right  = \(right)\n",
+    "shared = \(shared)\n"
+];
+```
+Обозначения в выводе: 100 = 1.0.0, 110 = 1.1.0, 200 = 2.0.0, 0 = не установлен.
+**Результат работы:**
+
+<img width="850" height="902" alt="image" src="https://github.com/user-attachments/assets/4e545cee-fb83-4ee0-a6d1-b56e922c4e09" />
+
+Решение единственное: устанавливается `foo 1.0.0` (без зависимостей) и `target 2.0.0`. Пакеты `left`, `right`, `shared` не устанавливаются, потому что `foo 1.0.0` их не требует. Если бы был выбран `foo 1.1.0`, то потребовались бы `left` и `right`, которые через `shared` создали бы конфликт с `target`.
+
 

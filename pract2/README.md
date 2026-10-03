@@ -74,10 +74,22 @@ npm view express
 Для получения дерева зависимостей использована утилита `pipdeptree`:
 ```bash
 pipdeptree --packages matplotlib --graph-output dot > matplotlib_deps.dot
+```
+Рендеринг изображения:
+```bash
+dot -Tpng matplotlib_deps.dot -o matplotlib_deps.png
+```
+### express
+Для получения графа зависимостей создан Graphviz-код вручную на основе данных из `npm view express`.
+Рендеринг изображения:
 
 <img width="980" height="625" alt="image" src="https://github.com/user-attachments/assets/666b17f3-e243-4751-b89e-09f5bd766507" />
 
 <img width="1314" height="383" alt="image" src="https://github.com/user-attachments/assets/0a640035-b2ad-4314-95bc-349af3954886" />
 
+**Результат работы:**
+Граф зависимостей matplotlib:
 
+Граф зависимостей express:
+<img width="2492" height="155" alt="image" src="https://github.com/user-attachments/assets/9b43750b-9c83-4045-8b9a-a32cb6143e91" />
 

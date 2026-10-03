@@ -127,3 +127,14 @@ output [
     "Сумма первых трёх: \(sum3)\n",
     "Сумма последних трёх: \(digits[4] + digits[5] + digits[6])\n"
 ];
+```
+**Установка MiniZinc:**
+На скриншоте показан процесс скачивания и распаковки MiniZinc IDE:
+<img width="1476" height="709" alt="image" src="https://github.com/user-attachments/assets/f9968745-121d-4fc6-a24c-6ea0fd195b28" />
+
+**Результат работы:**
+На скриншоте показано минимальное решение задачи: билет 620431, у которого сумма первых трёх цифр (6+2+0 = 8) равна сумме последних трёх (4+3+1 = 8). Все цифры различны.
+
+<img width="850" height="902" alt="image" src="https://github.com/user-attachments/assets/9aa31e21-8e2f-4619-9724-270787d5e482" />
+
+

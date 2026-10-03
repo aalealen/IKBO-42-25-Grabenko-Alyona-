@@ -61,3 +61,6 @@ npm view express
 - Либо клонировать репозиторий с GitHub: https://github.com/expressjs/express
 
 **Результат работы:**
+На скриншоте показан вывод команды npm `view express` - служебная информация о пакете: имя, версия, зависимости, лицензия, сопровождающие.
+<img width="1476" height="709" alt="image" src="https://github.com/user-attachments/assets/1b6e0d50-a5b3-468e-9cd2-ef8a0c5604e4" />
+

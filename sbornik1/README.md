@@ -98,10 +98,8 @@ nano main.py
 ls -l
 ```
 Запуск эмулятора:
-<img width="1078" height="742" alt="image" src="https://github.com/user-attachments/assets/57a341b2-e0fd-40c7-9349-6d078bbb1901" />
-
 ```bash
 python3 main.py
 ```
 **Результат работы:**
-
+<img width="1078" height="742" alt="image" src="https://github.com/user-attachments/assets/57a341b2-e0fd-40c7-9349-6d078bbb1901" />

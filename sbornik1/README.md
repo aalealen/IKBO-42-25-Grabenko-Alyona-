@@ -12,3 +12,19 @@
 - Команда `exit` для выхода
 - Обработка ошибок: неизвестная команда, неверное число аргументов
 <img width="1078" height="742" alt="image" src="https://github.com/user-attachments/assets/57a341b2-e0fd-40c7-9349-6d078bbb1901" />
+
+**Структура:**
+- ### `main.py` - точка входа
+```python
+from shell import ShellEmulator
+
+
+def main():
+    shell = ShellEmulator()
+    shell.run()
+
+
+if __name__ == '__main__':
+    main()
+```
+- `shell.py` - REPL и обработка команд

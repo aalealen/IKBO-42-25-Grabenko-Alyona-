@@ -317,5 +317,21 @@ python3 main.py --vfs myvfs.zip --script scripts/basic.txt
 ```bash
 ./scripts/run_script.sh
 ```
+**Результаты работы:**
+Запуск без параметров и `conf-dump`:
+<img width="799" height="466" alt="image" src="https://github.com/user-attachments/assets/2d4b0237-b56e-4b80-b275-e4719c3ed9d1" />
+
+Запуск со стартовым скриптом `scripts/basic.txt`:
+<img width="823" height="537" alt="image" src="https://github.com/user-attachments/assets/aef0912d-358f-42f8-8ad3-8d9e5dfdf7ed" />
+
+Запуск с VFS `myvfs.zip` — имя VFS в приглашении изменилось на `myvfs`:
+<img width="936" height="540" alt="image" src="https://github.com/user-attachments/assets/fd74bb3d-4311-4bad-b6fe-616bbea86a9d" />
+
+Запуск со скриптом ошибок `scripts/errors.txt`:
+<img width="823" height="440" alt="image" src="https://github.com/user-attachments/assets/35185a33-6bd6-4311-b5eb-17dfcc0b8ac4" />
+
+Запуск через bash-обёртку `./scripts/run_script.sh`:
+<img width="777" height="565" alt="image" src="https://github.com/user-attachments/assets/0d66b358-d4f1-4393-92af-da4427616ec5" />
+
 
 

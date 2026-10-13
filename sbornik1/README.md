@@ -333,5 +333,4 @@ python3 main.py --vfs myvfs.zip --script scripts/basic.txt
 Запуск через bash-обёртку `./scripts/run_script.sh`:
 <img width="777" height="565" alt="image" src="https://github.com/user-attachments/assets/0d66b358-d4f1-4393-92af-da4427616ec5" />
 
-
-
+## Этап 3. VFS (виртуальная файловая система)

@@ -12,7 +12,7 @@
 - Команда `exit` для выхода
 - Обработка ошибок: неизвестная команда, неверное число аргументов
 **Структура:**
-- #### `main.py` - точка входа
+- **`main.py`** - точка входа
 ```python
 from shell import ShellEmulator
 def main():
@@ -21,7 +21,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-- #### `shell.py` - REPL и обработка команд
+- **`shell.py`** - REPL и обработка команд
 ```python
 import os
 import shlex

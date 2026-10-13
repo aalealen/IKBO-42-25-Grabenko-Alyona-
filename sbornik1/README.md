@@ -572,25 +572,162 @@ class ShellEmulator:
                 self.execute(line)
 ```
 **Обновлённый main.py**
+```python
+import argparse
+import sys
+from shell import ShellEmulator
+def main():
+    parser = argparse.ArgumentParser(
+        description="Эмулятор оболочки ОС (Практическая работа №1, Вариант №8)"
+    )
+    parser.add_argument('--vfs', help='Путь к физическому расположению VFS (ZIP)')
+    parser.add_argument('--script', help='Путь к стартовому скрипту')
+    args = parser.parse_args()
 
-**Тестовые VFS**
-Созданы три ZIP-архива:
-- `vfs_samples/minimal.zip` - один файл
-- `vfs_samples/files.zip` - несколько файлов
-- `vfs_samples/deep.zip` - не менее 3 уровней вложенности
+    try:
+        shell = ShellEmulator(vfs_path=args.vfs, script_path=args.script)
+        shell.run()
+    except (FileNotFoundError, ValueError) as e:
+        print(f"Ошибка: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Непредвиденная ошибка: {e}")
+        sys.exit(1)
 
-
-**Bash-скрипты**
-- `scripts/run_minimal_vfs.sh`
-- `scripts/run_files_vfs.sh`
-- `scripts/run_deep_vfs.sh`
-- `scripts/run_vfs_error.s`
+if __name__ == '__main__':
+    main()
+```
 
 **Стартовые скрипты**
 - `scripts/vfs_test.txt` - работа с глубокой структурой
+```bash
+# Тест работы с VFS: глубокая структура
+ls
+cd l1
+ls
+cd l2
+ls
+cd l3
+ls
+cd /
+ls
+conf-dump
+exit
+```
 - `scripts/vfs_test_files.txt` - работа с несколькими файлами
+```bash
+# Тест работы с VFS: несколько файлов
+ls
+cd dir1
+ls
+cd ..
+ls
+exit
+```
 - `scripts/vfs_errors.txt` - обработка ошибок VFS
+```bash
+# Тест обработки ошибок VFS
+ls
+cd nonexistent
+ls /nonexistent
+cd readme.txt
+ls
+exit
+```
 
+**Bash-скрипты**
+- `scripts/run_minimal_vfs.sh`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --vfs vfs_samples/minimal.zip --script scripts/vfs_test.txt
+```
+- `scripts/run_files_vfs.sh`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --vfs vfs_samples/files.zip --script scripts/vfs_test_files.txt
+```
+- `scripts/run_deep_vfs.sh`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --vfs vfs_samples/deep.zip --script scripts/vfs_test.txt
+```
+- `scripts/run_vfs_error.s`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --vfs nonexistent.zip
+```
+
+**Тестовые VFS**
+`scripts/create_vfs.sh:`
+```bash
+#!/bin/bash
+mkdir -p vfs_samples
+mkdir -p vfs_minimal
+echo "Добро пожаловать в минимальный VFS" > vfs_minimal/readme.txt
+(cd vfs_minimal && zip -r ../vfs_samples/minimal.zip .)
+mkdir -p vfs_files/dir1
+echo "file A" > vfs_files/a.txt
+echo "file B" > vfs_files/b.txt
+echo "file C" > vfs_files/dir1/c.txt
+(cd vfs_files && zip -r ../vfs_samples/files.zip .)
+mkdir -p vfs_deep/l1/l2/l3
+echo "top" > vfs_deep/top.txt
+echo "deep" > vfs_deep/l1/l2/l3/deep.txt
+echo "mid" > vfs_deep/l1/l2/mid.txt
+(cd vfs_deep && zip -r ../vfs_samples/deep.zip .)
+echo "VFS созданы в vfs_samples/"
+```
+
+**Запуск**
+Создание VFS:
+```bash
+./scripts/create_vfs.sh
+```
+
+Проверка ошибок загрузки:
+```bash
+python3 main.py --vfs nonexistent.zip
+python3 main.py --vfs main.py
+```
+
+Минимальный VFS:
+```bash
+python3 main.py --vfs vfs_samples/minimal.zip
+```
+
+Глубокий VFS:
+```bash
+python3 main.py --vfs vfs_samples/deep.zip
+```
+
+Через bash-обёртки:
+```bash
+./scripts/run_minimal_vfs.sh
+./scripts/run_files_vfs.sh
+./scripts/run_deep_vfs.sh
+./scripts/run_vfs_error.sh
+```
+**Результаты работы:**
+Показана обработка ошибок при загрузке VFS
+<img width="972" height="822" alt="image" src="https://github.com/user-attachments/assets/fd366859-2cba-446c-a1d7-a4f26395678f" />
+
+Показана работа с минимальным VFS (`minimal.zip`)
+<img width="977" height="340" alt="image" src="https://github.com/user-attachments/assets/8b32cb69-6735-48c8-8ab0-3f321dcef1d0" />
+
+Показана работа с глубоким VFS (`deep.zip`)
+<img width="977" height="409" alt="image" src="https://github.com/user-attachments/assets/bb21ff69-975c-4c18-8bc5-05479a5a2f3c" />
+
+Показан запуск через bash-обёртку
+<img width="977" height="616" alt="image" src="https://github.com/user-attachments/assets/d13bc322-bb18-4c88-a396-f0006ec41190" />
+
+---
+
+**Вывод**
+В ходе работы разработан эмулятор оболочки ОС на Python. Реализованы три этапа: REPL с парсером и командами-заглушками, конфигурация через параметры командной строки и стартовые скрипты, а также виртуальная файловая система на основе ZIP-архива. Все операции с VFS выполняются в памяти. Получены навыки разработки CLI-приложений, работы с ZIP-архивами и оформления git-репозитория.
 
 
 

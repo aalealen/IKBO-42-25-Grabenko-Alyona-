@@ -306,8 +306,16 @@ python3 main.py --vfs sample.zip --script scripts/basic.txt
 python3 main.py
 ```
 Со стартовым скриптом:
-
+```bash
 python3 main.py --script scripts/basic.txt
-
+```
+С VFS и скриптом:
+```bash
+python3 main.py --vfs myvfs.zip --script scripts/basic.txt
+```
+Через bash-скрипт:
+```bash
+./scripts/run_script.sh
+```
 
 

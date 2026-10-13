@@ -249,3 +249,65 @@ class ShellEmulator:
                 self.execute(line)
 ```
 **Стартовые скрипты**
+`scripts/basic.txt:`
+```bash
+ls
+ls -l /home
+cd /tmp
+cd $HOME
+conf-dump
+exit
+```
+
+`scripts/errors.txt`:
+```bash
+ls
+unknowncommand
+exit extra_arg
+cd
+conf-dump extra_arg
+exit
+```
+`scripts/full.txt:`
+```bash
+# Полный скрипт: все команды и $HOME
+ls
+ls -l /home
+ls dir1 dir2
+cd /tmp
+cd $HOME
+cd
+conf-dump
+unknowncommand arg1 arg2
+exit
+```
+**Bash-скрипты для тестирования**
+`scripts/run_no_args.sh:`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py
+```
+`scripts/run_script.sh:`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --script scripts/basic.txt
+```
+`scripts/run_vfs.sh:`
+```bash
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python3 main.py --vfs sample.zip --script scripts/basic.txt
+```
+**Запуск**
+Без параметров:
+```bash
+python3 main.py
+```
+Со стартовым скриптом:
+
+python3 main.py --script scripts/basic.txt
+
+
+

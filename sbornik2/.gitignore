@@ -1,0 +1,15 @@
+# Python cache and generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated graph files
+dependency_graph.*

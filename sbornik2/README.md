@@ -22,4 +22,4 @@ python src/main.py --package bash --stage 1
 ```
 ### Результат выполнения
 На первом этапе программа проверяет параметры запуска и выводит информацию о выбранной конфигурации.
-
+<img width="996" height="246" alt="image" src="https://github.com/user-attachments/assets/1bee162b-ec7a-4a3e-8538-a43f062ad89f" />

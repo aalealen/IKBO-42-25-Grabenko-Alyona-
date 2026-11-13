@@ -11,18 +11,24 @@ from graph import (
     build_graph_bfs_recursive,
     build_reverse_dependency_map,
     print_ascii_tree,
-)from test_graph import load_test_graph
+)
+from test_graph import load_test_graph
+
 
 DEFAULT_REPOSITORY = (
     "https://archive.ubuntu.com/ubuntu/dists/noble/"
     "main/binary-amd64/Packages.gz"
 )
 
+
 def parse_args():
     """Parse command-line arguments."""
 
     parser = argparse.ArgumentParser(
-        description="Инструмент анализа графа зависимостей пакетов Ubuntu (apt)."
+        description=(
+            "Инструмент анализа графа зависимостей "
+            "пакетов Ubuntu (apt)."
+        )
     )
 
     parser.add_argument(
@@ -34,7 +40,7 @@ def parse_args():
     parser.add_argument(
         "--repository",
         default=DEFAULT_REPOSITORY,
-        help="URL файла Packages/Packages.gz (Ubuntu apt)."
+        help="URL файла Packages или Packages.gz."
     )
 
     parser.add_argument(
@@ -66,7 +72,10 @@ def parse_args():
         type=int,
         choices=(1, 2, 3, 4),
         default=1,
-        help="Этап запуска: 1 — CLI, 2 — прямые зависимости, 3 — граф."
+        help=(
+            "Этап запуска: 1 — CLI, 2 — прямые зависимости, "
+            "3 — граф, 4 — обратные зависимости."
+        )
     )
 
     return parser.parse_args()
@@ -77,7 +86,9 @@ def validate_args(args):
 
     # Проверка имени пакета.
     if not args.package.strip():
-        raise ValueError("Имя пакета не должно быть пустым.")
+        raise ValueError(
+            "Имя пакета не должно быть пустым."
+        )
 
     args.package = args.package.strip()
 
@@ -86,12 +97,13 @@ def validate_args(args):
 
     if not args.repository:
         if not args.test_mode:
-            raise ValueError("URL репозитория не должен быть пустым.")
+            raise ValueError(
+                "URL репозитория не должен быть пустым."
+            )
+
     elif not args.test_mode:
         try:
             parsed_url = urlparse(args.repository)
-
-            # Проверка корректности порта, если он указан.
             _ = parsed_url.port
 
         except ValueError as error:
@@ -142,13 +154,13 @@ def validate_args(args):
 
     if not output_path.parent.exists():
         raise ValueError(
-            f"Каталог для выходного файла не существует: "
+            "Каталог для выходного файла не существует: "
             f"{output_path.parent}"
         )
 
     if not output_path.parent.is_dir():
         raise ValueError(
-            f"Указанный родительский путь не является каталогом: "
+            "Родительский путь не является каталогом: "
             f"{output_path.parent}"
         )
 
@@ -159,7 +171,7 @@ def validate_args(args):
 
 
 def print_configuration(args):
-    """Print configuration as key-value pairs (stage 1 requirement)."""
+    """Print configuration as key-value pairs."""
 
     print("Параметры запуска:")
     print(f"package = {args.package}")
@@ -190,16 +202,19 @@ def main():
     # Этап 1: минимальный CLI-прототип.
     if args.stage == 1:
         print_configuration(args)
-        print("\nЭтап 1 завершён: параметры проверены.")
+        print(
+            "\nЭтап 1 завершён: параметры проверены."
+        )
         return 0
 
     try:
-
         # Этап 2: получение прямых зависимостей.
         if args.stage == 2:
 
             if args.test_mode:
-                dependency_map = load_test_graph(args.test_file)
+                dependency_map = load_test_graph(
+                    args.test_file
+                )
 
                 if args.package not in dependency_map:
                     raise ValueError(
@@ -227,18 +242,60 @@ def main():
 
             return 0
 
-        # Этап 3: построение транзитивного графа зависимостей.
+        # Загрузка данных для этапов 3 и 4.
         if args.test_mode:
             dependency_map = load_test_graph(args.test_file)
-
         else:
-            dependency_map = get_dependency_map(args.repository)
+            dependency_map = get_dependency_map(
+                args.repository
+            )
 
-        # Проверяем наличие пакета в репозитории.
+        # Этап 4: поиск обратных зависимостей.
+        if args.stage == 4:
+            reverse_map = build_reverse_dependency_map(
+                dependency_map
+            )
+
+            if args.package not in reverse_map:
+                raise ValueError(
+                    f"Пакет '{args.package}' не найден "
+                    "в репозитории/тестовом графе."
+                )
+
+            reverse_graph = build_graph_bfs_recursive(
+                args.package,
+                reverse_map
+            )
+
+            print(
+                f"\nОбратные зависимости пакета "
+                f"{args.package}:"
+            )
+
+            for package, dependents in reverse_graph.items():
+                if dependents:
+                    dependents_text = ", ".join(dependents)
+                else:
+                    dependents_text = (
+                        "(нет обратных зависимостей)"
+                    )
+
+                print(f"{package}: {dependents_text}")
+
+            if args.ascii_tree:
+                print("\nASCII-дерево обратных зависимостей:")
+                print_ascii_tree(
+                    args.package,
+                    reverse_graph
+                )
+
+            return 0
+
+        # Этап 3: построение транзитивного графа.
         if args.package not in dependency_map:
 
-            # Пакет может встречаться как зависимость другого пакета,
-            # даже если у него самого нет зависимостей.
+            # Пакет может встречаться как зависимость,
+            # даже если у него нет собственной записи.
             known_as_dependency = any(
                 args.package in dependencies
                 for dependencies in dependency_map.values()
@@ -264,11 +321,10 @@ def main():
         )
 
         for package, dependencies in graph.items():
-            dependencies_text = (
-                ", ".join(dependencies)
-                if dependencies
-                else "(нет зависимостей)"
-            )
+            if dependencies:
+                dependencies_text = ", ".join(dependencies)
+            else:
+                dependencies_text = "(нет зависимостей)"
 
             print(f"{package}: {dependencies_text}")
 
@@ -277,7 +333,12 @@ def main():
             print("\nASCII-дерево:")
             print_ascii_tree(args.package, graph)
 
-    except (ValueError, OSError, RuntimeError, KeyError) as error:
+    except (
+        ValueError,
+        OSError,
+        RuntimeError,
+        KeyError
+    ) as error:
         print(
             f"Ошибка выполнения: {error}",
             file=sys.stderr

@@ -1,4 +1,3 @@
-
 import argparse
 import sys
 from shell import ShellEmulator

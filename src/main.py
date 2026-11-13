@@ -7,9 +7,11 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from apt_parser import get_direct_dependencies, get_dependency_map
-from graph import build_graph_bfs_recursive, print_ascii_tree
-from test_graph import load_test_graph
-
+from graph import (
+    build_graph_bfs_recursive,
+    build_reverse_dependency_map,
+    print_ascii_tree,
+)from test_graph import load_test_graph
 
 DEFAULT_REPOSITORY = (
     "https://archive.ubuntu.com/ubuntu/dists/noble/"

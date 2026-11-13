@@ -1,4 +1,3 @@
-### Обновлённый `main.py`
 
 import argparse
 import sys

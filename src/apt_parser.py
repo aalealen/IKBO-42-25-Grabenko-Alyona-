@@ -1,5 +1,6 @@
 
-"""Download and parse apt Packages or Packages.gz using Python standard library."""
+"""Download and parse apt Packages or Packages.gz
+using Python standard library."""
 
 import gzip
 import urllib.error

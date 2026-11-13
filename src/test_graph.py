@@ -19,12 +19,20 @@ def load_test_graph(file_path):
 
     graph = {}
     for package, dependencies in content.items():
-        if not isinstance(package, str) or not package.isalpha() or not package.isupper():
+        if (
+            not isinstance(package, str)
+            or not package.isalpha()
+            or not package.isupper()
+        ):
             raise ValueError(
-                f"Название пакета '{package}' должно состоять из заглавных латинских букв."
+                f"Название пакета '{package}' "
+                "должно состоять из заглавных латинских букв."
             )
         if not isinstance(dependencies, list):
-            raise ValueError(f"Зависимости пакета {package} должны быть списком.")
+            raise ValueError(
+                f"Зависимости пакета {package} "
+                "должны быть списком."
+            )
 
         normalized_dependencies = []
         for dependency in dependencies:

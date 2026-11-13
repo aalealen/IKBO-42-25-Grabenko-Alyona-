@@ -1,6 +1,5 @@
 ### Обновлённый `main.py`
 
-```python
 import argparse
 import sys
 from shell import ShellEmulator

@@ -64,7 +64,7 @@ def parse_args():
     parser.add_argument(
         "--stage",
         type=int,
-        choices=(1, 2, 3),
+        choices=(1, 2, 3, 4),
         default=1,
         help="Этап запуска: 1 — CLI, 2 — прямые зависимости, 3 — граф."
     )
